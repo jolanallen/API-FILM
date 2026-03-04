@@ -72,7 +72,7 @@ class MovieController {
         $favoritesFile = __DIR__ . '/../favorites.json';
         if (!file_exists($favoritesFile)) {
             http_response_code(404);
-            echo json_encode(["error" => "Aucuns favori trouvé."]);
+            echo json_encode(["error" => "Aucun favori trouvé."]);
             return;
         }
 
@@ -87,27 +87,15 @@ class MovieController {
 
         if (count($favorites) === $countBefore) {
             http_response_code(404);
-
-            echo json_encode(["error" => "Favori non trouvés."]);
-
+            echo json_encode(["error" => "Favori non trouvé."]);
             return;
-
-
-
-
         }
 
         if (file_put_contents($favoritesFile, json_encode($favorites, JSON_PRETTY_PRINT))) {
-            echo json_encode(["message" => "Film retirez des favori"]);
-
+            echo json_encode(["message" => "Film retiré des favoris"]);
         } else {
             http_response_code(500);
-
-
-
-
-
-            echo json_encode(["error" => "impossible de mettre à jour les favori"]);
+            echo json_encode(["error" => "Impossible de mettre à jour les favoris"]);
         }
     }
 }

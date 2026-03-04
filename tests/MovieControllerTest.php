@@ -63,7 +63,8 @@ class MovieControllerTest extends TestCase {
         MovieController::removeFavorite();
         $output = ob_get_clean();
         
-        $this->assertStringContainsString('Film retiré des favoris', $output);
+        $data = json_decode($output, true);
+        $this->assertEquals('Film retiré des favoris', $data['message'] ?? '');
         
         // Vérifier que le fichier est vide maintenant
         $this->assertEquals('[]', file_get_contents($this->favoritesFile));
