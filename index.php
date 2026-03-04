@@ -1,29 +1,40 @@
 <?php
-
 require_once 'config/config.php';
 require_once 'controllers/MovieController.php';
+require_once 'middlewares/logger.php'; 
+require_once 'middlewares/cors.php'; 
+
 
 header("Content-Type: application/json");
 
-// Récupération de l'URI et de la méthode
-$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$method = $_SERVER['REQUEST_METHOD'];
 
-// Routage simple
-if ($method === 'GET' && str_starts_with($path, '/movies')) {
-    $type = $_GET['type'] ?? 'popular';
-    MovieController::list($type);
-} 
-elseif ($method === 'POST' && $path === '/favorites') {
-    MovieController::addFavorite();
-}
-elseif ($method === 'GET' && $path === '/favorites') {
-    MovieController::getFavorites();
-}
-elseif ($path === '/') {
-    echo json_encode(["message" => "API Films opérationnelle"]);
-}
-else {
-    http_response_code(404);
-    echo json_encode(["error" => "Route inconnue"]);
-}
+// simple routing system with switch case
+$routeur = function($request) {
+    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $method = $_SERVER['REQUEST_METHOD'];
+
+    switch($path) {
+        case '/':
+            echo json_encode(["message" => "API Films opérationnelle"]);
+            break;
+        case '/movies':
+            $type = $_GET['type'] ?? 'popular';
+            MovieController::list($type);
+            break;
+        case '/favorites':
+            if ($method === 'POST') {
+                MovieController::addFavorite();
+            } else {
+                MovieController::getFavorites();
+            }
+            break;
+        default:
+            http_response_code(404);
+            echo json_encode(["erreurs" => "Ressource inexistante"]);
+    }
+};
+
+
+$api = $logger($cors($routeur)); 
+
+$api($_REQUEST);
