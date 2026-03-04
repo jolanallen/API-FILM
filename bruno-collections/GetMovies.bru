@@ -1,0 +1,11 @@
+meta {
+  name: Get Movies
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8000/movies?type=popular
+  body: none
+  auth: none
+}

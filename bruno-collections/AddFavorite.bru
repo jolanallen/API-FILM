@@ -1,0 +1,18 @@
+meta {
+  name: Add Favorite
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8000/favorites
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id": 1236153,
+    "title": "Reconnu coupable"
+  }
+}
