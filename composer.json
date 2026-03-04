@@ -9,10 +9,12 @@
         "phpunit/phpunit": "^10.0"
     },
     "autoload": {
+        "files": [
+            "config/config.php"
+        ],
         "classmap": [
             "controllers/",
-            "services/",
-            "config/"
+            "services/"
         ]
     }
 }

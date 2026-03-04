@@ -10,5 +10,11 @@ if (file_exists(__DIR__ . '/../.env')) {
     }
 }
 
-define('TMDB_API_KEY', $_ENV['TMDB_API_KEY'] ?? '');
-define('TMDB_BASE_URL', $_ENV['TMDB_BASE_URL'] ?? 'https://api.themoviedb.org/3');
+if (!defined('TMDB_API_KEY')) {
+    define('TMDB_API_KEY', $_ENV['TMDB_API_KEY'] ?? '');
+}
+
+if (!defined('TMDB_BASE_URL')) {
+    define('TMDB_BASE_URL', $_ENV['TMDB_BASE_URL'] ?? 'https://api.themoviedb.org/3');
+}
+
