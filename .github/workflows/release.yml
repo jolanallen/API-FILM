@@ -21,9 +21,15 @@ jobs:
           php-version: '8.2'
           extensions: mbstring, json, curl
 
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
       - name: Check PHP Syntax (Lint) before release
         run: |
           find . -name "*.php" -not -path "./vendor/*" -exec php -l {} \; | grep -v "No syntax errors detected" && exit 1 || exit 0
+
+      - name: Run PHPUnit Tests
+        run: vendor/bin/phpunit
 
       - name: Create Release
         uses: softprops/action-gh-release@v2

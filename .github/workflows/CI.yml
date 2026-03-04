@@ -7,8 +7,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  lint:
-    name: Lint PHP Files
+  test:
+    name: Lint & Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -20,6 +20,12 @@ jobs:
           php-version: '8.2'
           extensions: mbstring, json, curl
 
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
       - name: Check PHP Syntax (Lint)
         run: |
           find . -name "*.php" -not -path "./vendor/*" -exec php -l {} \; | grep -v "No syntax errors detected" && exit 1 || exit 0
+
+      - name: Run PHPUnit Tests
+        run: vendor/bin/phpunit
