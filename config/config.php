@@ -1,5 +1,7 @@
 <?php
 
+
+
 // Chargement manuel du fichier .env
 if (file_exists(__DIR__ . '/../.env')) {
     $lines = file(__DIR__ . '/../.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
@@ -16,5 +18,11 @@ if (!defined('TMDB_API_KEY')) {
 
 if (!defined('TMDB_BASE_URL')) {
     define('TMDB_BASE_URL', $_ENV['TMDB_BASE_URL'] ?? 'https://api.themoviedb.org/3');
+}
+
+if (!defined('APP_URL')) {
+    $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    define('APP_URL', $protocol . "://" . $host);
 }
 
