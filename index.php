@@ -24,6 +24,8 @@ $routeur = function($request) {
         case '/favorites':
             if ($method === 'POST') {
                 MovieController::addFavorite();
+            } elseif ($method === 'DELETE') {
+                MovieController::removeFavorite();
             } else {
                 MovieController::getFavorites();
             }
