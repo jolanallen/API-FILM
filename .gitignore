@@ -1,1 +1,4 @@
 .env
+favorites.json
+vendor/
+.DS_Store
